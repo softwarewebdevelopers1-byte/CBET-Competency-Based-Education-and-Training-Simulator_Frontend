@@ -1,0 +1,391 @@
+/* src/css/sidebar.module.css */
+
+.sidebar {
+  width: 280px;
+  height: 100vh;
+  background: white;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  left: 0;
+  top: 0;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+/* Sidebar Header */
+.sidebarHeader {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.logoIcon {
+  font-size: 2rem;
+}
+
+.logoIconSmall {
+  font-size: 2rem;
+  margin: 0 auto;
+}
+
+.logoText {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.toggleBtn {
+  background: none;
+  border: none;
+  color: #4a5568;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.toggleBtn:hover {
+  background: #f7fafc;
+  color: #667eea;
+}
+
+/* User Info */
+.userInfo {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.userAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.userDetails {
+  flex: 1;
+  min-width: 0;
+}
+
+.userName {
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userRole {
+  color: #718096;
+  margin: 0;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
+
+/* Navigation */
+.nav {
+  flex: 1;
+  padding: 1.5rem 0;
+  overflow-y: auto;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  color: #4a5568;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.navItem:hover {
+  background: #f7fafc;
+  color: #667eea;
+}
+
+.navItem.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.navItem.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: white;
+}
+
+.navIcon {
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+}
+
+.navLabel {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Notifications Section */
+.notifications {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.notificationHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #4a5568;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.notificationList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.notificationItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: #718096;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.notificationItem:hover {
+  color: #667eea;
+}
+
+.notificationDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #667eea;
+  display: inline-block;
+}
+
+.notificationText {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Sidebar Footer */
+.sidebarFooter {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footerItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  color: #4a5568;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+}
+
+.footerItem:hover {
+  background: #f7fafc;
+  color: #667eea;
+}
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  color: #e53e3e;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 0.95rem;
+}
+
+.logoutBtn:hover {
+  background: #fff5f5;
+}
+
+/* Collapsed State Styles */
+.sidebar.collapsed .userInfo {
+  justify-content: center;
+  padding: 1rem;
+}
+
+.sidebar.collapsed .userAvatar {
+  margin: 0;
+}
+
+.sidebar.collapsed .navItem {
+  justify-content: center;
+  padding: 0.75rem;
+}
+
+.sidebar.collapsed .navIcon {
+  margin: 0;
+}
+
+.sidebar.collapsed .sidebarFooter {
+  align-items: center;
+  padding: 1rem;
+}
+
+.sidebar.collapsed .logoutBtn {
+  justify-content: center;
+  padding: 0.75rem;
+}
+
+/* Scrollbar Styling */
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 2px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 240px;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar.collapsed {
+    width: 70px;
+    transform: translateX(0);
+  }
+
+  .sidebar.collapsed .userAvatar {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    background: #1a202c;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .sidebarHeader,
+  .userInfo,
+  .notifications,
+  .sidebarFooter {
+    border-color: #2d3748;
+  }
+
+  .userName {
+    color: #e2e8f0;
+  }
+
+  .navItem {
+    color: #a0aec0;
+  }
+
+  .navItem:hover {
+    background: #2d3748;
+  }
+
+  .notificationHeader {
+    color: #e2e8f0;
+  }
+
+  .notificationItem {
+    color: #a0aec0;
+  }
+
+  .footerItem {
+    color: #a0aec0;
+  }
+
+  .footerItem:hover {
+    background: #2d3748;
+  }
+
+  .notifications {
+    background: #1a202c;
+  }
+
+  .toggleBtn {
+    color: #a0aec0;
+  }
+
+  .toggleBtn:hover {
+    background: #2d3748;
+    color: #667eea;
+  }
+}

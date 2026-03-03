@@ -24,8 +24,29 @@ export function LoginRoute() {
   };
 
   const handleSubmit = async (e) => {
+    try {
+      let response = await fetch("http://localhost:8080/user/auth/now/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+      if (response.ok) {
+        let data = await response.json();
+        localStorage.setItem("token", data.token);
+        // navigate("/dashboard");
+        setError("Login successful! Redirecting...");
+      }
+    } catch (error) {
+        console.error("Login error:", error);
+        setError("An error occurred during login. Please try again.");
+    }
     e.preventDefault();
-    
+
     if (!formData.email || !formData.password) {
       setError("Please fill in all fields");
       return;
@@ -36,7 +57,10 @@ export function LoginRoute() {
 
     // Simulate login - replace with actual API call
     setTimeout(() => {
-      if (formData.email === "demo@cbet.edu" && formData.password === "password") {
+      if (
+        formData.email === "demo@cbet.edu" &&
+        formData.password === "password"
+      ) {
         navigate("/dashboard");
       } else {
         setError("Invalid email or password");
@@ -53,11 +77,7 @@ export function LoginRoute() {
           <p>Sign in to your account</p>
         </div>
 
-        {error && (
-          <div className={styles.error}>
-            {error}
-          </div>
-        )}
+        {error && <div className={styles.error}>{error}</div>}
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.inputGroup}>
@@ -94,11 +114,7 @@ export function LoginRoute() {
             </div>
           </div>
 
-          <button 
-            type="submit" 
-            className={styles.button}
-            disabled={loading}
-          >
+          <button type="submit" className={styles.button} disabled={loading}>
             {loading ? "Signing in..." : "Sign In"}
             {!loading && <FiLogIn />}
           </button>
