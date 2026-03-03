@@ -5,13 +5,21 @@ import { SignUpRoute } from "./AuthRoutes/signIn.jsx";
 import { LandingPage } from "./others/landingPage.jsx";
 import { Dashboard } from "./Dashboard/dashboard.jsx";
 import { ErrorPage } from "./others/error.jsx";
+import { Homepage } from "./Dashboard/homePage.jsx";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/dashboard"
+          element={
+            <Dashboard>
+              <Homepage />
+            </Dashboard>
+          }
+        />
         <Route path="/login" element={<LoginRoute />} />
         <Route path="*" element={<ErrorPage type="404" />} />
         <Route path="/signup" element={<SignUpRoute />} />

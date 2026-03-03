@@ -21,8 +21,9 @@ import {
   FiBell,
 } from "react-icons/fi";
 
-export function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false);
+export function Sidebar({ collapsed: collapsedProp, onToggle }) {
+  const [internalCollapsed, setInternalCollapsed] = useState(false);
+  const collapsed = typeof collapsedProp === "boolean" ? collapsedProp : internalCollapsed;
   const navigate = useNavigate();
 
   // Mock user data - replace with actual user data from props or store
@@ -41,7 +42,11 @@ export function Sidebar() {
   };
 
   const toggleSidebar = () => {
-    setCollapsed(!collapsed);
+    if (typeof onToggle === "function") {
+      onToggle();
+    } else {
+      setInternalCollapsed((c) => !c);
+    }
   };
 
   // Define navigation items based on user role
