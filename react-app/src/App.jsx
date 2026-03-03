@@ -6,6 +6,11 @@ import { LandingPage } from "./others/landingPage.jsx";
 import { Dashboard } from "./Dashboard/dashboard.jsx";
 import { ErrorPage } from "./others/error.jsx";
 import { Homepage } from "./Dashboard/homePage.jsx";
+import { MyCourses } from "./Dashboard/courses.jsx";
+import { AchievementsPage } from "./Dashboard/archievement.jsx";
+import { MyPortfolio } from "./Dashboard/myPortifolio.jsx";
+import { InteractiveScenario } from "./Dashboard/interactivepage.jsx";
+import { AssessmentsPage } from "./Dashboard/assesment.jsx";
 
 function App() {
   return (
@@ -17,6 +22,46 @@ function App() {
           element={
             <Dashboard>
               <Homepage />
+            </Dashboard>
+          }
+        />
+        <Route
+          path="/courses"
+          element={
+            <Dashboard>
+              <MyCourses />
+            </Dashboard>
+          }
+        />
+        <Route
+          path="/portfolio"
+          element={
+            <Dashboard>
+              <MyPortfolio />
+            </Dashboard>
+          }
+        />
+        <Route
+          path="/achievements"
+          element={
+            <Dashboard>
+              <AchievementsPage />
+            </Dashboard>
+          }
+        />
+          <Route
+          path="/assessments"
+          element={
+            <Dashboard>
+              <AssessmentsPage />
+            </Dashboard>
+          }
+        />
+        <Route
+          path="/scenarios"
+          element={
+            <Dashboard>
+              <InteractiveScenario />
             </Dashboard>
           }
         />

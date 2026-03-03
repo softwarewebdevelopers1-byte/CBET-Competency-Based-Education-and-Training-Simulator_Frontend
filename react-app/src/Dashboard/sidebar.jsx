@@ -7,32 +7,30 @@ import {
   FiHome,
   FiBookOpen,
   FiFileText,
-  FiVideo,
   FiAward,
-  FiUsers,
-  FiSettings,
   FiLogOut,
   FiChevronLeft,
   FiChevronRight,
-  FiBarChart2,
   FiFolder,
   FiCpu,
   FiUser,
   FiBell,
+  FiSettings,
 } from "react-icons/fi";
 
 export function Sidebar({ collapsed: collapsedProp, onToggle }) {
   const [internalCollapsed, setInternalCollapsed] = useState(false);
-  const collapsed = typeof collapsedProp === "boolean" ? collapsedProp : internalCollapsed;
+  const collapsed =
+    typeof collapsedProp === "boolean" ? collapsedProp : internalCollapsed;
   const navigate = useNavigate();
 
-  // Mock user data - replace with actual user data from props or store
-  const user = {
-    role: "student", // or "trainer", "admin"
-    profile: {
-      firstName: "John",
-      lastName: "Doe",
-    },
+  // Mock student data - replace with actual user data from props or store
+  const student = {
+    firstName: "John",
+    lastName: "Doe",
+    program: "Diploma in ICT",
+    year: "Year 2",
+    studentId: "ICT-2024-001",
   };
 
   const handleLogout = () => {
@@ -49,64 +47,15 @@ export function Sidebar({ collapsed: collapsedProp, onToggle }) {
     }
   };
 
-  // Define navigation items based on user role
-  const getNavItems = () => {
-    const commonItems = [
-      { path: "/dashboard", icon: <FiHome />, label: "Dashboard" },
-    ];
-
-    const studentItems = [
-      { path: "/courses", icon: <FiBookOpen />, label: "My Courses" },
-      { path: "/scenarios", icon: <FiCpu />, label: "Scenarios" },
-      { path: "/assessments", icon: <FiFileText />, label: "Assessments" },
-      { path: "/portfolio", icon: <FiFolder />, label: "Portfolio" },
-      { path: "/achievements", icon: <FiAward />, label: "Achievements" },
-    ];
-
-    const trainerItems = [
-      {
-        path: "/courses/manage",
-        icon: <FiBookOpen />,
-        label: "Manage Courses",
-      },
-      { path: "/materials", icon: <FiVideo />, label: "Learning Materials" },
-      {
-        path: "/assessments/create",
-        icon: <FiFileText />,
-        label: "Create Assessments",
-      },
-      { path: "/students", icon: <FiUsers />, label: "Students" },
-      { path: "/analytics", icon: <FiBarChart2 />, label: "Analytics" },
-    ];
-
-    const adminItems = [
-      { path: "/admin/users", icon: <FiUsers />, label: "User Management" },
-      {
-        path: "/admin/courses",
-        icon: <FiBookOpen />,
-        label: "Course Management",
-      },
-      {
-        path: "/admin/analytics",
-        icon: <FiBarChart2 />,
-        label: "System Analytics",
-      },
-      { path: "/admin/settings", icon: <FiSettings />, label: "Settings" },
-    ];
-
-    switch (user?.role) {
-      case "student":
-        return [...commonItems, ...studentItems];
-      case "trainer":
-        return [...commonItems, ...trainerItems];
-      case "admin":
-        return [...commonItems, ...adminItems];
-      default:
-        return commonItems;
-    }
-  };
-
-  const navItems = getNavItems();
+  // Student-only navigation items
+  const navItems = [
+    { path: "/dashboard", icon: <FiHome />, label: "Dashboard" },
+    { path: "/courses", icon: <FiBookOpen />, label: "My Courses" },
+    { path: "/scenarios", icon: <FiCpu />, label: "Interactive Scenarios" },
+    { path: "/assessments", icon: <FiFileText />, label: "Assessments" },
+    { path: "/portfolio", icon: <FiFolder />, label: "My Portfolio" },
+    { path: "/achievements", icon: <FiAward />, label: "Achievements" },
+  ];
 
   return (
     <div className={`${styles.sidebar} ${collapsed ? styles.collapsed : ""}`}>
@@ -115,7 +64,7 @@ export function Sidebar({ collapsed: collapsedProp, onToggle }) {
         {!collapsed && (
           <div className={styles.logo}>
             <span className={styles.logoIcon}>🎓</span>
-            <span className={styles.logoText}>CBET</span>
+            <span className={styles.logoText}>CBET Student</span>
           </div>
         )}
         {collapsed && <span className={styles.logoIconSmall}>🎓</span>}
@@ -125,20 +74,39 @@ export function Sidebar({ collapsed: collapsedProp, onToggle }) {
         </button>
       </div>
 
-      {/* User Info */}
-      {user && (
-        <div className={styles.userInfo}>
-          <div className={styles.userAvatar}>
-            {user.profile?.firstName?.charAt(0) || <FiUser />}
+      {/* Student Info */}
+      <div className={styles.studentInfo}>
+        <div className={styles.studentAvatar}>
+          {student.firstName?.charAt(0) || <FiUser />}
+        </div>
+        {!collapsed && (
+          <div className={styles.studentDetails}>
+            <p className={styles.studentName}>
+              {student.firstName} {student.lastName}
+            </p>
+            <p className={styles.studentProgram}>{student.program}</p>
+            <p className={styles.studentId}>ID: {student.studentId}</p>
           </div>
-          {!collapsed && (
-            <div className={styles.userDetails}>
-              <p className={styles.userName}>
-                {user.profile?.firstName} {user.profile?.lastName}
-              </p>
-              <p className={styles.userRole}>{user.role}</p>
-            </div>
-          )}
+        )}
+      </div>
+
+      {/* Quick Stats for Student */}
+      {!collapsed && (
+        <div className={styles.quickStats}>
+          <div className={styles.statItem}>
+            <span className={styles.statValue}>85%</span>
+            <span className={styles.statLabel}>Avg. Score</span>
+          </div>
+          <div className={styles.statDivider}></div>
+          <div className={styles.statItem}>
+            <span className={styles.statValue}>12</span>
+            <span className={styles.statLabel}>Badges</span>
+          </div>
+          <div className={styles.statDivider}></div>
+          <div className={styles.statItem}>
+            <span className={styles.statValue}>7</span>
+            <span className={styles.statLabel}>Streak</span>
+          </div>
         </div>
       )}
 
@@ -160,37 +128,44 @@ export function Sidebar({ collapsed: collapsedProp, onToggle }) {
         ))}
       </nav>
 
-      {/* Notifications */}
+      {/* Student Notifications */}
       {!collapsed && (
         <div className={styles.notifications}>
           <div className={styles.notificationHeader}>
             <FiBell />
-            <span>Notifications</span>
+            <span>Updates</span>
+            <span className={styles.notificationBadge}>3</span>
           </div>
           <div className={styles.notificationList}>
             <div className={styles.notificationItem}>
               <span className={styles.notificationDot}></span>
               <span className={styles.notificationText}>
-                New assessment available
+                Network Security Quiz due tomorrow
               </span>
             </div>
             <div className={styles.notificationItem}>
               <span className={styles.notificationDot}></span>
               <span className={styles.notificationText}>
-                Course update: Web Development
+                New scenario: Ethical Hacking Basics
+              </span>
+            </div>
+            <div className={styles.notificationItem}>
+              <span className={styles.notificationDot}></span>
+              <span className={styles.notificationText}>
+                Your portfolio was reviewed
               </span>
             </div>
           </div>
         </div>
       )}
 
-      {/* Bottom Section */}
+      {/* Bottom Section - Student Only */}
       <div className={styles.sidebarFooter}>
         {!collapsed && (
           <>
             <NavLink to="/profile" className={styles.footerItem}>
               <FiUser />
-              <span>Profile</span>
+              <span>My Profile</span>
             </NavLink>
             <NavLink to="/settings" className={styles.footerItem}>
               <FiSettings />
@@ -203,6 +178,21 @@ export function Sidebar({ collapsed: collapsedProp, onToggle }) {
           {!collapsed && <span>Logout</span>}
         </button>
       </div>
+
+      {/* Student Progress Summary (Collapsed View) */}
+      {collapsed && (
+        <div className={styles.collapsedStats}>
+          <div className={styles.collapsedStat} title="85% Average Score">
+            📊
+          </div>
+          <div className={styles.collapsedStat} title="12 Badges">
+            🏆
+          </div>
+          <div className={styles.collapsedStat} title="7 Day Streak">
+            🔥
+          </div>
+        </div>
+      )}
     </div>
   );
 }
