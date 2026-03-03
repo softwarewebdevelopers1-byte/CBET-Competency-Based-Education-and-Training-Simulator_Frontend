@@ -20,8 +20,7 @@ import {
 
 export function Sidebar({ collapsed: collapsedProp, onToggle }) {
   const [internalCollapsed, setInternalCollapsed] = useState(false);
-  const collapsed =
-    typeof collapsedProp === "boolean" ? collapsedProp : internalCollapsed;
+  const collapsed = typeof collapsedProp === "boolean" ? collapsedProp : internalCollapsed;
   const navigate = useNavigate();
 
   // Mock student data - replace with actual user data from props or store
@@ -34,7 +33,6 @@ export function Sidebar({ collapsed: collapsedProp, onToggle }) {
   };
 
   const handleLogout = () => {
-    // Add your logout logic here
     localStorage.removeItem("accessToken");
     navigate("/login");
   };
@@ -61,13 +59,14 @@ export function Sidebar({ collapsed: collapsedProp, onToggle }) {
     <div className={`${styles.sidebar} ${collapsed ? styles.collapsed : ""}`}>
       {/* Sidebar Header */}
       <div className={styles.sidebarHeader}>
-        {!collapsed && (
+        {!collapsed ? (
           <div className={styles.logo}>
             <span className={styles.logoIcon}>🎓</span>
             <span className={styles.logoText}>CBET Student</span>
           </div>
+        ) : (
+          <span className={styles.logoIconSmall}>🎓</span>
         )}
-        {collapsed && <span className={styles.logoIconSmall}>🎓</span>}
 
         <button onClick={toggleSidebar} className={styles.toggleBtn}>
           {collapsed ? <FiChevronRight /> : <FiChevronLeft />}
@@ -90,7 +89,7 @@ export function Sidebar({ collapsed: collapsedProp, onToggle }) {
         )}
       </div>
 
-      {/* Quick Stats for Student */}
+      {/* Quick Stats */}
       {!collapsed && (
         <div className={styles.quickStats}>
           <div className={styles.statItem}>
@@ -110,7 +109,7 @@ export function Sidebar({ collapsed: collapsedProp, onToggle }) {
         </div>
       )}
 
-      {/* Navigation Items */}
+      {/* Navigation */}
       <nav className={styles.nav}>
         {navItems.map((item, index) => (
           <NavLink
@@ -121,14 +120,12 @@ export function Sidebar({ collapsed: collapsedProp, onToggle }) {
             }
           >
             <span className={styles.navIcon}>{item.icon}</span>
-            {!collapsed && (
-              <span className={styles.navLabel}>{item.label}</span>
-            )}
+            {!collapsed && <span className={styles.navLabel}>{item.label}</span>}
           </NavLink>
         ))}
       </nav>
 
-      {/* Student Notifications */}
+      {/* Notifications */}
       {!collapsed && (
         <div className={styles.notifications}>
           <div className={styles.notificationHeader}>
@@ -159,7 +156,7 @@ export function Sidebar({ collapsed: collapsedProp, onToggle }) {
         </div>
       )}
 
-      {/* Bottom Section - Student Only */}
+      {/* Footer */}
       <div className={styles.sidebarFooter}>
         {!collapsed && (
           <>
@@ -179,18 +176,12 @@ export function Sidebar({ collapsed: collapsedProp, onToggle }) {
         </button>
       </div>
 
-      {/* Student Progress Summary (Collapsed View) */}
+      {/* Collapsed Stats */}
       {collapsed && (
         <div className={styles.collapsedStats}>
-          <div className={styles.collapsedStat} title="85% Average Score">
-            📊
-          </div>
-          <div className={styles.collapsedStat} title="12 Badges">
-            🏆
-          </div>
-          <div className={styles.collapsedStat} title="7 Day Streak">
-            🔥
-          </div>
+          <div className={styles.collapsedStat} title="85% Average Score">📊</div>
+          <div className={styles.collapsedStat} title="12 Badges">🏆</div>
+          <div className={styles.collapsedStat} title="7 Day Streak">🔥</div>
         </div>
       )}
     </div>
