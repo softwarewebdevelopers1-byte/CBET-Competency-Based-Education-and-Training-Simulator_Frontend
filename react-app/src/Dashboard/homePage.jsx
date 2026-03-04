@@ -33,7 +33,7 @@ export function Homepage() {
 
   // Mock user data - replace with actual user data
   const user = {
-    name: "John Doe",
+    name: JSON.parse(localStorage.getItem("cbet_user")) || "User",
     role: "student", // or "trainer", "admin"
     institution: "Nairobi TVET Institute",
     avatar: "JD",

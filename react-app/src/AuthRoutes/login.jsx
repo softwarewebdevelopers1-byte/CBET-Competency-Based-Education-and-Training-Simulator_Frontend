@@ -1,72 +1,56 @@
 // src/components/auth/LoginRoute.jsx
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styles from "../css/login.module.css";
 import { FiMail, FiLock, FiLogIn } from "react-icons/fi";
 
 export function LoginRoute() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-    if (error) setError("");
-  };
-
   const handleSubmit = async (e) => {
-    try {
-      let response = await fetch("http://localhost:8080/user/auth/now/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
-      if (response.ok) {
-        let data = await response.json();
-        localStorage.setItem("token", data.token);
-        // navigate("/dashboard");
-        setError("Login successful! Redirecting...");
-      }
-    } catch (error) {
-        console.error("Login error:", error);
-        setError("An error occurred during login. Please try again.");
-    }
     e.preventDefault();
 
-    if (!formData.email || !formData.password) {
+    if (!email || !password) {
       setError("Please fill in all fields");
       return;
     }
 
-    setLoading(true);
-    setError("");
+    try {
+      setLoading(true);
+      setError("");
 
-    // Simulate login - replace with actual API call
-    setTimeout(() => {
-      if (
-        formData.email === "demo@cbet.edu" &&
-        formData.password === "password"
-      ) {
+      const response = await fetch(
+        "http://localhost:8000/user/auth/now/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ email, password }),
+        },
+      );
+
+      const data = await response.json();
+      localStorage.setItem("cbet_user", JSON.stringify(data.user));
+      console.log(data);
+
+      if (response.ok) {
+        setError("Login successful! Redirecting...");
         navigate("/dashboard");
       } else {
-        setError("Invalid email or password");
-        setLoading(false);
+        setError(data.message || "Invalid email or password");
       }
-    }, 1000);
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("An error occurred during login. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -88,8 +72,11 @@ export function LoginRoute() {
                 type="email"
                 id="email"
                 name="email"
-                value={formData.email}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (error) setError("");
+                }}
                 placeholder="Enter your email"
                 disabled={loading}
                 required
@@ -105,8 +92,11 @@ export function LoginRoute() {
                 type="password"
                 id="password"
                 name="password"
-                value={formData.password}
-                onChange={handleChange}
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (error) setError("");
+                }}
                 placeholder="Enter your password"
                 disabled={loading}
                 required

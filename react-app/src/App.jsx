@@ -11,6 +11,7 @@ import { AchievementsPage } from "./Dashboard/archievement.jsx";
 import { MyPortfolio } from "./Dashboard/myPortifolio.jsx";
 import { InteractiveScenario } from "./Dashboard/interactivepage.jsx";
 import { AssessmentsPage } from "./Dashboard/assesment.jsx";
+import { AuthRoutes } from "./AuthRoutes/combine.auth.jsx";
 
 function App() {
   return (
@@ -49,7 +50,7 @@ function App() {
             </Dashboard>
           }
         />
-          <Route
+        <Route
           path="/assessments"
           element={
             <Dashboard>
@@ -65,9 +66,23 @@ function App() {
             </Dashboard>
           }
         />
-        <Route path="/login" element={<LoginRoute />} />
+        <Route
+          path="/login"
+          element={
+            <AuthRoutes>
+              <LoginRoute />
+            </AuthRoutes>
+          }
+        />
         <Route path="*" element={<ErrorPage type="404" />} />
-        <Route path="/signup" element={<SignUpRoute />} />
+        <Route
+          path="/signup"
+          element={
+            <AuthRoutes>
+              <SignUpRoute />
+            </AuthRoutes>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

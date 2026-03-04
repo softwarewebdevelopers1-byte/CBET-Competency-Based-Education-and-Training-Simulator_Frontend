@@ -6,44 +6,35 @@ import styles from "../css/signup.module.css";
 import { FiUser, FiMail, FiLock, FiUserPlus } from "react-icons/fi";
 
 export function SignUpRoute() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-    if (error) setError("");
-  };
-
   const validateForm = () => {
-    if (!formData.fullName || !formData.email || !formData.password || !formData.confirmPassword) {
+    if (!fullName || !email || !password || !confirmPassword) {
       setError("Please fill in all fields");
       return false;
     }
 
-    if (formData.password.length < 6) {
+    if (password.length < 6) {
       setError("Password must be at least 6 characters");
       return false;
     }
 
-    if (formData.password !== formData.confirmPassword) {
+    if (password !== confirmPassword) {
       setError("Passwords do not match");
       return false;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
+    if (!emailRegex.test(email)) {
       setError("Please enter a valid email address");
       return false;
     }
@@ -53,7 +44,7 @@ export function SignUpRoute() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     setLoading(true);
@@ -63,7 +54,7 @@ export function SignUpRoute() {
     setTimeout(() => {
       setSuccess(true);
       setLoading(false);
-      
+
       // Redirect to login after 2 seconds
       setTimeout(() => {
         navigate("/login");
@@ -93,11 +84,7 @@ export function SignUpRoute() {
           <p>Join CBET Simulator today</p>
         </div>
 
-        {error && (
-          <div className={styles.error}>
-            {error}
-          </div>
-        )}
+        {error && <div className={styles.error}>{error}</div>}
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.inputGroup}>
@@ -107,9 +94,11 @@ export function SignUpRoute() {
               <input
                 type="text"
                 id="fullName"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
+                value={fullName}
+                onChange={(e) => {
+                  setFullName(e.target.value);
+                  if (error) setError("");
+                }}
                 placeholder="Enter your full name"
                 disabled={loading}
                 required
@@ -124,9 +113,11 @@ export function SignUpRoute() {
               <input
                 type="email"
                 id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (error) setError("");
+                }}
                 placeholder="Enter your email"
                 disabled={loading}
                 required
@@ -141,9 +132,11 @@ export function SignUpRoute() {
               <input
                 type="password"
                 id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (error) setError("");
+                }}
                 placeholder="Create a password"
                 disabled={loading}
                 required
@@ -158,9 +151,11 @@ export function SignUpRoute() {
               <input
                 type="password"
                 id="confirmPassword"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
+                value={confirmPassword}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  if (error) setError("");
+                }}
                 placeholder="Confirm your password"
                 disabled={loading}
                 required
@@ -168,11 +163,7 @@ export function SignUpRoute() {
             </div>
           </div>
 
-          <button 
-            type="submit" 
-            className={styles.button}
-            disabled={loading}
-          >
+          <button type="submit" className={styles.button} disabled={loading}>
             {loading ? "Creating Account..." : "Sign Up"}
             {!loading && <FiUserPlus />}
           </button>
