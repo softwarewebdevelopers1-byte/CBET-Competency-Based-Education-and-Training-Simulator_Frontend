@@ -21,7 +21,6 @@ export function Dashboard({ children }) {
       if (res.ok) {
         location("/dashboard");
       }
-      console.log(await res.json());
     }
     checkAuth();
   }, []);

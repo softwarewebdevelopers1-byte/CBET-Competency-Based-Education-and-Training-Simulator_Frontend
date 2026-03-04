@@ -37,7 +37,6 @@ export function LoginRoute() {
 
       const data = await response.json();
       localStorage.setItem("cbet_user", JSON.stringify(data.user));
-      console.log(data);
 
       if (response.ok) {
         setError("Login successful! Redirecting...");

@@ -20,7 +20,6 @@ export function AuthRoutes({ children }) {
       if (res.ok) {
         navigate("/dashboard");
       }
-      console.log(await res.json());
     }
     checkAuth();
   }, []);

@@ -33,12 +33,11 @@ export function Sidebar({ collapsed: collapsedProp, onToggle }) {
   };
 
   const handleLogout = async () => {
-    let res = await fetch("http://localhost:8000/auth/all/logout", {
+    let res = await fetch("http://localhost:8000/auth/CBET/user/logout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
     });
-    console.log(res);
     localStorage.removeItem("cbet_user");
     navigate("/login");
   };
